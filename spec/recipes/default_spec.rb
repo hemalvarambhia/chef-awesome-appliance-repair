@@ -14,4 +14,8 @@ describe "chef-awesome-appliance-repair::default" do
   it "installs unzip" do
     expect(chef_run).to install_package "unzip"
   end
+
+  it "installs the Python WSGI adapter module for Apache" do
+    expect(chef_run).to install_package "libapache2-mod-wsgi"
+  end
 end

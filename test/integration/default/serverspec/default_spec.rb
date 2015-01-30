@@ -23,3 +23,8 @@ end
 describe package("unzip") do
  it { should be_installed }
 end
+
+# Python WSGI adapter module for Apache
+describe package("libapache2-mod-wsgi") do
+ it { should be_installed }
+end
