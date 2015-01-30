@@ -15,3 +15,7 @@ end
 package "libapache2-mod-wsgi" do
  action :install
 end 
+
+package "python-pip" do
+ action :install
+end
