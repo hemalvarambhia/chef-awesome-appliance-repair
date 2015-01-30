@@ -11,3 +11,7 @@ end
 package "unzip" do
  action :install
 end
+
+package "libapache2-mod-wsgi" do
+ action :install
+end 
