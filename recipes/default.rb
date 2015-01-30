@@ -23,3 +23,7 @@ end
 package "python-pip" do
  action :install
 end
+
+package "python-mysqldb" do
+ action :install
+end
