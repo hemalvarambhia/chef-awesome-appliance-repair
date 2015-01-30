@@ -28,3 +28,7 @@ end
 describe package("libapache2-mod-wsgi") do
  it { should be_installed }
 end
+
+describe package("python-pip") do
+ it { should be_installed }
+end
