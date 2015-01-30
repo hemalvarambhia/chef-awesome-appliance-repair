@@ -7,3 +7,7 @@ end
 package "mysql-server" do
  action :install
 end
+
+package "unzip" do
+ action :install
+end
