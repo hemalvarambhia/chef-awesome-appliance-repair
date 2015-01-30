@@ -37,3 +37,6 @@ describe package("python-pip") do
  it { should be_installed }
 end
 
+describe package("python-mysqldb") do
+ it { should be_installed }
+end
