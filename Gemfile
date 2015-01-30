@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'berkshelf'
-
+gem 'chefspec',   '~> 4.0'
 # Uncomment these lines if you want to live on the Edge:
 #
 # group :development do
