@@ -11,6 +11,10 @@ describe "chef-awesome-appliance-repair::default" do
     expect(chef_run).to install_package "mysql-server"
   end  
 
+  it "installs the MySQL server client" do
+    expect(chef_run).to install_package "mysql-client"
+  end
+
   it "installs unzip" do
     expect(chef_run).to install_package "unzip"
   end

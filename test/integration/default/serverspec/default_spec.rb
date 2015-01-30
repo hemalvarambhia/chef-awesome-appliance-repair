@@ -20,6 +20,10 @@ describe service("mysql") do
  it { should be_running }
 end
 
+describe package("mysql-client") do
+ it { should be_installed }
+end
+
 describe package("unzip") do
  it { should be_installed }
 end
@@ -32,3 +36,4 @@ end
 describe package("python-pip") do
  it { should be_installed }
 end
+
