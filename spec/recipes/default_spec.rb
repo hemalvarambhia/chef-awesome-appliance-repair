@@ -7,5 +7,7 @@ describe "chef-awesome-appliance-repair::default" do
     expect(chef_run).to install_package "apache2"
   end 
 
-  
+  it "installs MySQL server" do
+    expect(chef_run).to install_package "mysql-server"
+  end  
 end
