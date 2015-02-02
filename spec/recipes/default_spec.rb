@@ -5,7 +5,11 @@ describe "chef-awesome-appliance-repair::default" do
 
   it "installs apache2" do
     expect(chef_run).to install_package "apache2"
-  end 
+  end
+
+  it "creates the apache config file to serve the web app" do
+    expect(chef_run).to create_template("/etc/apache2/sites-enabled/AAR-apache.conf")
+  end
 
   it "installs MySQL server" do
     expect(chef_run).to install_package "mysql-server"
