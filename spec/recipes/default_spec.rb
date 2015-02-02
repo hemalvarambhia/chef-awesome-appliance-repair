@@ -35,7 +35,7 @@ describe "chef-awesome-appliance-repair::default" do
     expect(chef_run).to install_python_pip "Flask"
   end
 
-  it "creates a directory for the web app" do
+  it "creates a directory for the web app that is owned by Apache" do
     expect(chef_run).to create_directory("/var/www/AAR").with(owner: "www-data", group: "www-data")
   end
 end
