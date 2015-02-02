@@ -4,6 +4,10 @@ package "apache2" do
   action :install
 end
 
+cookbook_file "/etc/apache2/sites-enabled/AAR-apache.conf" do
+ action :create
+end
+
 package "mysql-server" do
  action :install
 end
