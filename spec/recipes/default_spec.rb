@@ -8,7 +8,7 @@ describe "chef-awesome-appliance-repair::default" do
   end
 
   it "creates the apache config file to serve the web app" do
-    expect(chef_run).to create_cookbook_file("/etc/apache2/sites-enabled/AAR-apache.conf")
+    expect(chef_run).to create_cookbook_file "/etc/apache2/sites-enabled/AAR-apache.conf"
   end
 
   it "installs MySQL server" do
