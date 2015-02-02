@@ -33,5 +33,7 @@ python_pip "Flask" do
 end
 
 directory "/var/www/AAR" do
+ owner "www-data"
+ group "www-data"
  action :create
 end
