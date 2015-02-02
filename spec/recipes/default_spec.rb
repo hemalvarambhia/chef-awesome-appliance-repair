@@ -30,4 +30,8 @@ describe "chef-awesome-appliance-repair::default" do
   it "installs the python MySQL client library" do
     expect(chef_run).to install_package "python-mysqldb"
   end
+
+  it "installs Flask" do
+    expect(chef_run).to install_python_pip "Flask"
+  end
 end
