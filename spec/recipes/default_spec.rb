@@ -36,6 +36,6 @@ describe "chef-awesome-appliance-repair::default" do
   end
 
   it "creates a directory for the web app" do
-    expect(chef_run).to create_directory("/var/www/AAR")
+    expect(chef_run).to create_directory("/var/www/AAR").with(owner: "www-data", group: "www-data")
   end
 end
