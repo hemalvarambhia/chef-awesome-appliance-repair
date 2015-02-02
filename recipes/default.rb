@@ -31,3 +31,7 @@ end
 python_pip "Flask" do
  action :install
 end
+
+directory "/var/www/AAR" do
+ action :create
+end
