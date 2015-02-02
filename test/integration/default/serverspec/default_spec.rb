@@ -46,3 +46,7 @@ describe command("pip freeze | grep Flask") do
   should match /Flask/
  end
 end
+
+describe file("/var/www/AAR") do
+ it { should be_directory }
+end

@@ -34,4 +34,8 @@ describe "chef-awesome-appliance-repair::default" do
   it "installs Flask" do
     expect(chef_run).to install_python_pip "Flask"
   end
+
+  it "creates a directory for the web app" do
+    expect(chef_run).to create_directory("/var/www/AAR")
+  end
 end
