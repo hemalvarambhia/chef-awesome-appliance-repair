@@ -11,6 +11,10 @@ describe service("apache2") do
  it { should be_running }
 end
 
+describe file("/etc/apache2/sites-enabled/AAR-apache.conf") do
+ it { should be_file }
+end
+
 describe package("mysql-server") do
  it { should be_installed }
 end
