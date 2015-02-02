@@ -27,3 +27,7 @@ end
 package "python-mysqldb" do
  action :install
 end
+
+python_pip "Flask" do
+ action :install
+end
