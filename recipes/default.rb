@@ -36,6 +36,12 @@ python_pip "Flask" do
  action :install
 end
 
+directory("/var/www/") do
+ owner "www-data"
+ group "www-data"
+ action :create
+end
+
 directory "/var/www/AAR" do
  owner "www-data"
  group "www-data"
