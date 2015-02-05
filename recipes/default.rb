@@ -4,7 +4,12 @@ package "apache2" do
   action :install
 end
 
+service "apache2" do
+ action [:enable, :start]
+end
+
 cookbook_file "/etc/apache2/sites-enabled/AAR-apache.conf" do
+ notifies :reload, "service[apache2]"
  action :create
 end
 
