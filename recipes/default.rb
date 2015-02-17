@@ -21,6 +21,15 @@ package "mysql-client" do
  action :install
 end
 
+cookbook_file "make_AARdb.sql" do
+  action :create
+end
+
+execute "create-AARdb" do
+  command "mysql -u root < make_AARdb.sql"
+  action :run
+end
+
 package "unzip" do
  action :install
 end

@@ -49,7 +49,11 @@ describe "chef-awesome-appliance-repair::default" do
     expect(chef_run).to create_directory("/var/www/AAR").with(owner: "www-data", group: "www-data")
   end
 
-  it "installs chef-vault gem" do
-    expect(chef_run).to install_chef_gem("chef-vault")
+  it "copies over the application database creation script" do
+    expect(chef_run).to create_cookbook_file("make_AARdb.sql")
+  end
+
+  it "creates the AAR's relational database" do
+    expect(chef_run).to run_execute("create-AARdb").with(command: "mysql -u root < make_AARdb.sql")
   end
 end
