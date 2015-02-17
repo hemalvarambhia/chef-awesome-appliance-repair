@@ -13,7 +13,7 @@ service "apache2" do
 end
 
 cookbook_file "/etc/apache2/sites-enabled/AAR-apache.conf" do
- notifies :reload, "service[apache2]"
+ notifies :restart, "service[apache2]"
  action :create
 end
 
