@@ -39,6 +39,10 @@ execute "create-AARdb-user" do
   action :run
 end
 
+execute "mysql -u root -e \"GRANT CREATE,INSERT,DELETE,UPDATE,SELECT on AARdb.* to aarapp@localhost\"" do
+  action :run
+end
+
 package "unzip" do
  action :install
 end

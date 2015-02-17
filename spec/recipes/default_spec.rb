@@ -60,4 +60,8 @@ describe "chef-awesome-appliance-repair::default" do
   it "creates the application database user" do
     expect(chef_run).to run_execute("create-AARdb-user").with(command: "mysql -u root -e \"CREATE USER 'aarapp'@'localhost' IDENTIFIED BY '#{chef_run.node[:aar_db_password]}'\"")
   end
+
+  it "grants aarapp SELECT, CREATE, DELETE and UPDATE privileges on AARdb" do
+    expect(chef_run).to run_execute("mysql -u root -e \"GRANT CREATE,INSERT,DELETE,UPDATE,SELECT on AARdb.* to aarapp@localhost\"")
+  end
 end

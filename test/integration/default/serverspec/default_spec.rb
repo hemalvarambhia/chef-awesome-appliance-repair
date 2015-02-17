@@ -84,3 +84,9 @@ describe command("mysql -u root -e \"SELECT User FROM mysql.user where user='aar
     should match /aarapp/
   }
 end
+
+describe command("mysql -u root -e \"SHOW GRANTS FOR 'aarapp'@'localhost'\"") do
+  its(:stdout) {
+    should match /SELECT, INSERT, UPDATE, DELETE, CREATE ON `AARdb`.*/
+  }
+end
