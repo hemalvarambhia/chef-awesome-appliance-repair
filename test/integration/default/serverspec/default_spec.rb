@@ -15,17 +15,37 @@ describe file("/etc/apache2/sites-enabled/AAR-apache.conf") do
  it { should be_file }
 end
 
-describe package("mysql-server") do
- it { should be_installed }
-end
+describe "Database set up" do
+  describe package("mysql-server") do
+   it { should be_installed }
+  end
 
-describe service("mysql") do
- it { should be_enabled }
- it { should be_running }
-end
+  describe service("mysql") do
+   it { should be_enabled }
+   it { should be_running }
+  end
 
-describe package("mysql-client") do
- it { should be_installed }
+  describe package("mysql-client") do
+   it { should be_installed }
+  end
+
+  describe command("mysql -u root -e \"SHOW DATABASES LIKE 'AARdb'\"") do
+    its(:stdout) {
+      should match /AARdb/
+    }
+  end
+
+  describe command("mysql -u root -e \"SELECT User FROM mysql.user where user='aarapp'\"") do
+    its(:stdout) {
+      should match /aarapp/
+    }
+  end
+
+  describe command("mysql -u root -e \"SHOW GRANTS FOR 'aarapp'@'localhost'\"") do
+    its(:stdout) {
+      should match /SELECT, INSERT, UPDATE, DELETE, CREATE ON `AARdb`.*/
+    }
+  end
 end
 
 describe package("unzip") do
@@ -70,24 +90,6 @@ describe file("/var/www/AAR/AAR_config.py") do
   }
   its(:content) {
     should match /SECRET_KEY = \"secret_key\"/
-  }
-end
-
-describe command("mysql -u root -e \"SHOW DATABASES LIKE 'AARdb'\"") do
-  its(:stdout) {
-    should match /AARdb/
-  }
-end
-
-describe command("mysql -u root -e \"SELECT User FROM mysql.user where user='aarapp'\"") do
-  its(:stdout) {
-    should match /aarapp/
-  }
-end
-
-describe command("mysql -u root -e \"SHOW GRANTS FOR 'aarapp'@'localhost'\"") do
-  its(:stdout) {
-    should match /SELECT, INSERT, UPDATE, DELETE, CREATE ON `AARdb`.*/
   }
 end
 
