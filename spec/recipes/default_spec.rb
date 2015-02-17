@@ -39,24 +39,26 @@ describe "chef-awesome-appliance-repair::default" do
     end
   end
 
-  it "installs unzip" do
-    expect(chef_run).to install_package "unzip"
-  end
+  describe "Application frameworks and tools" do
+    it "installs unzip" do
+      expect(chef_run).to install_package "unzip"
+    end
 
-  it "installs the Python WSGI adapter module for Apache" do
-    expect(chef_run).to install_package "libapache2-mod-wsgi"
-  end
+    it "installs the Python WSGI adapter module for Apache" do
+      expect(chef_run).to install_package "libapache2-mod-wsgi"
+    end
 
-  it "install python pip" do
-    expect(chef_run).to install_package "python-pip"
-  end
+    it "install python pip" do
+      expect(chef_run).to install_package "python-pip"
+    end
 
-  it "installs the python MySQL client library" do
-    expect(chef_run).to install_package "python-mysqldb"
-  end
+    it "installs the python MySQL client library" do
+      expect(chef_run).to install_package "python-mysqldb"
+    end
 
-  it "installs Flask" do
-    expect(chef_run).to install_python_pip "Flask"
+    it "installs Flask" do
+      expect(chef_run).to install_python_pip "Flask"
+    end
   end
 
   it "sets ownership of the /var/www/ directory to Apache" do

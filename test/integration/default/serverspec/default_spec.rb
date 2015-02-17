@@ -48,27 +48,29 @@ describe "Database set up" do
   end
 end
 
-describe package("unzip") do
- it { should be_installed }
-end
+describe "Application frameworks and tools" do
+  describe package("unzip") do
+   it { should be_installed }
+  end
 
-# Python WSGI adapter module for Apache
-describe package("libapache2-mod-wsgi") do
- it { should be_installed }
-end
+  # Python WSGI adapter module for Apache
+  describe package("libapache2-mod-wsgi") do
+   it { should be_installed }
+  end
 
-describe package("python-pip") do
- it { should be_installed }
-end
+  describe package("python-pip") do
+   it { should be_installed }
+  end
 
-describe package("python-mysqldb") do
- it { should be_installed }
-end
+  describe package("python-mysqldb") do
+   it { should be_installed }
+  end
 
-describe command("pip freeze | grep Flask") do
- its(:stdout) do
-  should match /Flask/
- end
+  describe command("pip freeze | grep Flask") do
+   its(:stdout) do
+    should match /Flask/
+   end
+  end
 end
 
 describe file("/var/www/") do
