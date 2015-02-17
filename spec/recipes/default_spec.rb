@@ -3,14 +3,28 @@ require_relative "../spec_helper.rb"
 describe "chef-awesome-appliance-repair::default" do
   let(:chef_run) { ChefSpec::SoloRunner.new.converge(described_recipe) }
 
-  it "installs apache2" do
-    expect(chef_run).to install_package "apache2"
-  end
+  describe "Web server set up" do
+    it "installs apache2" do
+      expect(chef_run).to install_package "apache2"
+    end
 
-  it "creates the apache config file to serve the web app" do
-    expect(chef_run).to create_cookbook_file "/etc/apache2/sites-enabled/AAR-apache.conf"
-    apache_config_file = chef_run.cookbook_file "/etc/apache2/sites-enabled/AAR-apache.conf"
-    expect(apache_config_file).to notify("service[apache2]").to(:reload)
+    it "creates the apache config file to serve the web app" do
+      expect(chef_run).to create_cookbook_file "/etc/apache2/sites-enabled/AAR-apache.conf"
+      apache_config_file = chef_run.cookbook_file "/etc/apache2/sites-enabled/AAR-apache.conf"
+      expect(apache_config_file).to notify("service[apache2]").to(:reload)
+    end
+
+    it "sets ownership of the /var/www/ directory to Apache" do
+      expect(chef_run).to create_directory("/var/www/").with(owner: "www-data", group: "www-data")
+    end
+
+    it "creates a directory for the web app that is owned by Apache" do
+      expect(chef_run).to create_directory("/var/www/AAR").with(owner: "www-data", group: "www-data")
+    end
+
+    it "gracefully restarts apache" do
+      expect(chef_run).to run_execute("apachectl graceful")
+    end
   end
 
   describe "Setting up the application database" do
@@ -61,14 +75,6 @@ describe "chef-awesome-appliance-repair::default" do
     end
   end
 
-  it "sets ownership of the /var/www/ directory to Apache" do
-    expect(chef_run).to create_directory("/var/www/").with(owner: "www-data", group: "www-data")
-  end
-
-  it "creates a directory for the web app that is owned by Apache" do
-    expect(chef_run).to create_directory("/var/www/AAR").with(owner: "www-data", group: "www-data")
-  end
-
   describe "Application deployment" do
     it "downloads the application archive from github" do
       expect(chef_run).to create_remote_file("AAR_master.zip").with(source: "https://github.com/colincam/Awesome-Appliance-Repair/archive/master.zip")
@@ -77,9 +83,5 @@ describe "chef-awesome-appliance-repair::default" do
     it "copies the contents of the application to /var/www" do
       expect(chef_run).to run_execute("mv Awesome-Appliance-Repair-master/AAR /var/www")
     end
-  end
-
-  it "gracefully restarts apache" do
-    expect(chef_run).to run_execute("apachectl graceful")
   end
 end
