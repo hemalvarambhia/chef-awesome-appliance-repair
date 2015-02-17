@@ -90,3 +90,10 @@ describe command("mysql -u root -e \"SHOW GRANTS FOR 'aarapp'@'localhost'\"") do
     should match /SELECT, INSERT, UPDATE, DELETE, CREATE ON `AARdb`.*/
   }
 end
+
+describe command("ls /var/www/AAR") do
+  its(:stdout) {
+    expected_contents = %w{AAR_config.py __init__.py awesomeapp.py awesomeapp.wsgi robots.txt static templates}.join("\n")
+    should match /#{expected_contents}/
+  }
+end

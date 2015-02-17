@@ -16,4 +16,14 @@ module ChefAwesomeApplianceRepairHelper
       command.stdout=~/#{expected_user}/ and command.stderr.empty?
     end
   end
+
+  module GeneralCommands
+    include Chef::Mixin::ShellOut
+
+    def application_exists?
+      command = shell_out("[ -d /var/www/AAR ] && echo \"exists\" || echo \"does not exist\"", returns: [0, 2])
+
+      command.stdout=~/exists/ and command.stderr.empty?
+    end
+  end
 end

@@ -64,4 +64,18 @@ describe "chef-awesome-appliance-repair::default" do
   it "grants aarapp SELECT, CREATE, DELETE and UPDATE privileges on AARdb" do
     expect(chef_run).to run_execute("mysql -u root -e \"GRANT CREATE,INSERT,DELETE,UPDATE,SELECT on AARdb.* to aarapp@localhost\"")
   end
+
+  describe "Application deployment" do
+    it "downloads the application archive from github" do
+      expect(chef_run).to create_remote_file("AAR_master.zip").with(source: "https://github.com/colincam/Awesome-Appliance-Repair/archive/master.zip")
+    end
+
+    it "copies the contents of the application to /var/www" do
+      expect(chef_run).to run_execute("mv Awesome-Appliance-Repair-master/AAR /var/www")
+    end
+  end
+
+  it "gracefully restarts apache" do
+    expect(chef_run).to run_execute("apachectl graceful")
+  end
 end
