@@ -52,3 +52,7 @@ directory "/var/www/AAR" do
  group "www-data"
  action :create
 end
+
+chef_gem "chef-vault" do
+  action :install
+end

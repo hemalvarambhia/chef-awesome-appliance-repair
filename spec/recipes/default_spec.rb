@@ -48,4 +48,8 @@ describe "chef-awesome-appliance-repair::default" do
   it "creates a directory for the web app that is owned by Apache" do
     expect(chef_run).to create_directory("/var/www/AAR").with(owner: "www-data", group: "www-data")
   end
+
+  it "installs chef-vault gem" do
+    expect(chef_run).to install_chef_gem("chef-vault")
+  end
 end
