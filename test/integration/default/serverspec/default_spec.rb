@@ -72,3 +72,9 @@ describe file("/var/www/AAR/AAR_config.py") do
     should match /SECRET_KEY = \"secret_key\"/
   }
 end
+
+describe command("mysql -u root -e \"SHOW DATABASES LIKE 'AARdb'\"") do
+  its(:stdout) {
+    should match /AARdb/
+  }
+end
