@@ -35,6 +35,7 @@ end
 
 execute "create-AARdb-user" do
   command "mysql -u root -e \"CREATE USER 'aarapp'@'localhost' IDENTIFIED BY 'aar_db_password'\""
+  not_if { user_exists? }
   action :run
 end
 
