@@ -53,6 +53,7 @@ directory "/var/www/AAR" do
  action :create
 end
 
-chef_gem "chef-vault" do
-  action :install
+template "/var/www/AAR/AAR_config.py" do
+  variables application_db_password: node[:aar_db_password]
+  action :create
 end

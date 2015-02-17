@@ -62,3 +62,10 @@ describe file("/var/www/AAR") do
  it { should be_owned_by "www-data" }
  it { should be_grouped_into "www-data" }
 end
+
+describe file("/var/www/AAR/AAR_config.py") do
+  it { should be_file }
+  its(:content) {
+    should match /CONNECTION_ARGS = {\"host\":\"localhost\", "user":\"aarapp\", \"passwd\":\"aar_db_password\", \"db\":\"AARdb\"}/
+  }
+end
