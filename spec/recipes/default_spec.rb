@@ -56,4 +56,8 @@ describe "chef-awesome-appliance-repair::default" do
   it "creates the AAR's relational database" do
     expect(chef_run).to run_execute("create-AARdb").with(command: "mysql -u root < make_AARdb.sql")
   end
+
+  it "creates the application database user" do
+    expect(chef_run).to run_execute("create-AARdb-user").with(command: "mysql -u root -e \"CREATE USER 'aarapp'@'localhost' IDENTIFIED BY '#{chef_run.node[:aar_db_password]}'\"")
+  end
 end

@@ -33,6 +33,11 @@ execute "create-AARdb" do
   action :run
 end
 
+execute "create-AARdb-user" do
+  command "mysql -u root -e \"CREATE USER 'aarapp'@'localhost' IDENTIFIED BY 'aar_db_password'\""
+  action :run
+end
+
 package "unzip" do
  action :install
 end

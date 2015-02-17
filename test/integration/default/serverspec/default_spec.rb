@@ -78,3 +78,9 @@ describe command("mysql -u root -e \"SHOW DATABASES LIKE 'AARdb'\"") do
     should match /AARdb/
   }
 end
+
+describe command("mysql -u root -e \"SELECT User FROM mysql.user where user='aarapp'\"") do
+  its(:stdout) {
+    should match /aarapp/
+  }
+end
