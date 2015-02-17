@@ -1,3 +1,5 @@
+Chef::Resource::Execute.send(:include, ChefAwesomeApplianceRepairHelper::MySQLCommands)
+
 include_recipe "apt::default"
 
 package "apache2" do
@@ -27,6 +29,7 @@ end
 
 execute "create-AARdb" do
   command "mysql -u root < make_AARdb.sql"
+  not_if { database_exists? }
   action :run
 end
 
