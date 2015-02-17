@@ -68,4 +68,7 @@ describe file("/var/www/AAR/AAR_config.py") do
   its(:content) {
     should match /CONNECTION_ARGS = {\"host\":\"localhost\", "user":\"aarapp\", \"passwd\":\"aar_db_password\", \"db\":\"AARdb\"}/
   }
+  its(:content) {
+    should match /SECRET_KEY = \"secret_key\"/
+  }
 end

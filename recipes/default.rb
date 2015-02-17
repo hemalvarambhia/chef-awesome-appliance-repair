@@ -54,6 +54,6 @@ directory "/var/www/AAR" do
 end
 
 template "/var/www/AAR/AAR_config.py" do
-  variables aar_db_password: node[:aar_db_password]
+  variables aar_db_password: node[:aar_db_password], secret_key: node[:aar_secret_key]
   action :create
 end
