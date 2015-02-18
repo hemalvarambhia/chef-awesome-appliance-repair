@@ -26,4 +26,14 @@ module ChefAwesomeApplianceRepairHelper
       command.stdout=~/exists/ and command.stderr.empty?
     end
   end
+
+  module ApacheCommands
+    include Chef::Mixin::ShellOut
+
+    def enabled?(name)
+      command = shell_out("[ -L /etc/apache2/sites-enabled/#{name} ] && echo \"exists\" || echo \"does not exist\"", returns: [0, 2])
+
+      command.stdout=~/exists/ and command.stderr.empty?
+    end
+  end
 end

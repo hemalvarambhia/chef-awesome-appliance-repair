@@ -1,5 +1,6 @@
 Chef::Resource::Execute.send(:include, ChefAwesomeApplianceRepairHelper::MySQLCommands)
 Chef::Resource::Execute.send(:include, ChefAwesomeApplianceRepairHelper::GeneralCommands)
+Chef::Resource::Execute.send(:include, ChefAwesomeApplianceRepairHelper::ApacheCommands)
 Chef::Resource::RemoteFile.send(:include, ChefAwesomeApplianceRepairHelper::GeneralCommands)
 
 include_recipe "apt::default"
@@ -13,8 +14,14 @@ service "apache2" do
 end
 
 cookbook_file "/etc/apache2/sites-enabled/AAR-apache.conf" do
- notifies :restart, "service[apache2]"
+ notifies :reload, "service[apache2]"
  action :create
+end
+
+execute "a2dissite default" do
+  only_if { enabled?("000-default") }
+  notifies :reload, "service[apache2]"
+  action :run
 end
 
 package "mysql-server" do
