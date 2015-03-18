@@ -25,5 +25,6 @@ execute "create-AARdb-user" do
 end
 
 execute "mysql -u root -e \"GRANT CREATE,INSERT,DELETE,UPDATE,SELECT on AARdb.* to aarapp@localhost\"" do
+  not_if { permissions_granted? }
   action :run
 end

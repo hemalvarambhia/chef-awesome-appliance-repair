@@ -2,6 +2,13 @@ module ChefAwesomeApplianceRepairHelper
   module MySQLCommands
     include Chef::Mixin::ShellOut
 
+    def permissions_granted?
+      permissions_on_db_command = shell_out(
+          "mysql -u root -e \"SHOW GRANTS FOR 'aarapp'@'localhost'\"", returns: [0, 2] )
+
+      permissions_on_db_command.stdout=~/GRANT SELECT, INSERT, UPDATE, DELETE, CREATE ON `AARdb`.*/
+    end
+
     def database_exists?
       command = shell_out("mysql -u root -e \"SHOW DATABASES LIKE 'AARdb'\"", returns: [0, 2])
       expected_database = Regexp.escape "AARdb"
