@@ -7,13 +7,9 @@ include_recipe "chef-awesome-appliance-repair::web_server"
 
 include_recipe "chef-awesome-appliance-repair::database"
 
-package "unzip" do
- action :install
-end
-
 package "libapache2-mod-wsgi" do
  action :install
-end 
+end
 
 package "python-pip" do
  action :install
@@ -24,6 +20,10 @@ package "python-mysqldb" do
 end
 
 python_pip "Flask" do
+ action :install
+end
+
+package "unzip" do
  action :install
 end
 
