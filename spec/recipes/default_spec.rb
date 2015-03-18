@@ -10,6 +10,10 @@ describe "chef-awesome-appliance-repair::default" do
   end
 
   describe "Setting up the application database" do
+    it "installs and configures MySQL" do
+      expect(chef_run).to include_recipe "chef-awesome-appliance-repair::database"
+    end
+
     it "installs MySQL server" do
       expect(chef_run).to install_package "mysql-server"
     end
