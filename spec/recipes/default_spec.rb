@@ -7,10 +7,6 @@ describe "chef-awesome-appliance-repair::default" do
     it "installs apache web server" do
       expect(chef_run).to include_recipe "chef-awesome-appliance-repair::web_server"
     end
-
-    it "gracefully restarts apache" do
-      expect(chef_run).to run_execute("apachectl graceful")
-    end
   end
 
   describe "Setting up the application database" do
@@ -68,6 +64,10 @@ describe "chef-awesome-appliance-repair::default" do
 
     it "copies the contents of the application to /var/www" do
       expect(chef_run).to run_execute("mv Awesome-Appliance-Repair-master/AAR /var/www")
+    end
+
+    it "gracefully restarts apache" do
+      expect(chef_run).to run_execute("apachectl graceful")
     end
   end
 end
