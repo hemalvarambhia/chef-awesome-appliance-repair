@@ -1,27 +1,35 @@
 Chef::Resource::Execute.send(:include, ChefAwesomeApplianceRepairHelper::ApacheCommands)
-apache = case node[:platform]
-           when "ubuntu"
-             "apache2"
-           when "centos"
-             "httpd"
-         end
 
-package apache do
+package node[:apache][:package] do
   action :install
 end
 
-service apache do
+service node[:apache][:service] do
   action [:enable, :start]
 end
 
-cookbook_file "/etc/apache2/sites-enabled/AAR-apache.conf" do
-  notifies :reload, "service[#{apache}]"
+directory "#{node[:apache][:dir]}/sites-available" do
+  owner "root"
+  group "root"
+  mode 0755
+  action :create
+end
+
+directory "#{node[:apache][:dir]}/sites-enabled" do
+  owner "root"
+  group "root"
+  mode 0755
+  action :create
+end
+
+cookbook_file "#{node[:apache][:dir]}/sites-enabled/AAR-apache.conf" do
+  notifies :reload, "service[#{node[:apache][:service]}]"
   action :create
 end
 
 execute "a2dissite default" do
   only_if { enabled?("000-default") }
-  notifies :reload, "service[#{apache}]"
+  notifies :reload, "service[#{node[:apache][:service]}]"
   action :run
 end
 

@@ -36,6 +36,20 @@ describe "chef-awesome-appliance-repair::web_server" do
       expect(chef_run).to install_package "httpd"
     end
 
+    it "creates the sites-available directory" do
+      expect(chef_run).to create_directory("/etc/httpd/sites-available").with(owner: "root", group: "root", mode: 0755)
+    end
+
+    it "creates the sites-available directory" do
+      expect(chef_run).to create_directory("/etc/httpd/sites-enabled").with(owner: "root", group: "root", mode: 0755)
+    end
+
+    it "creates the apache config file to serve the web app" do
+      expect(chef_run).to create_cookbook_file "/etc/httpd/sites-enabled/AAR-apache.conf"
+      apache_config_file = chef_run.cookbook_file "/etc/httpd/sites-enabled/AAR-apache.conf"
+      expect(apache_config_file).to notify("service[httpd]").to(:reload)
+    end
+
     it "enables and starts apache" do
       expect(chef_run).to enable_service "httpd"
       expect(chef_run).to start_service "httpd"
