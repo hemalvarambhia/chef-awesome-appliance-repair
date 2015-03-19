@@ -22,3 +22,9 @@ default[:apache][:dir] = case node[:platform]
                              "/etc/httpd"
                          end
 
+default[:apache][:conf_dir] = case node[:platform]
+                                when "ubuntu"
+                                  "#{node[:apache][:dir]}/sites-enabled"
+                                when "centos"
+                                  "#{node[:apache][:dir]}/conf.d"
+                              end

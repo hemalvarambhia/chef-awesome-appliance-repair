@@ -8,21 +8,7 @@ service node[:apache][:service] do
   action [:enable, :start]
 end
 
-directory "#{node[:apache][:dir]}/sites-available" do
-  owner "root"
-  group "root"
-  mode 0755
-  action :create
-end
-
-directory "#{node[:apache][:dir]}/sites-enabled" do
-  owner "root"
-  group "root"
-  mode 0755
-  action :create
-end
-
-cookbook_file "#{node[:apache][:dir]}/sites-enabled/AAR-apache.conf" do
+cookbook_file "#{node[:apache][:conf_dir]}/AAR-apache.conf" do
   notifies :reload, "service[#{node[:apache][:service]}]"
   action :create
 end
