@@ -38,15 +38,8 @@ module ChefAwesomeApplianceRepairHelper
     include Chef::Mixin::ShellOut
 
     def enabled?(name)
-
-      apache_dir = case node[:platform]
-                     when "ubuntu"
-                       "/etc/apache2"
-                     when "centos"
-                       "/etc/httpd"
-                   end
-
-      command = shell_out("[ -L #{apache_dir}/sites-enabled/#{name} ] && echo \"exists\" || echo \"does not exist\"", returns: [0, 2])
+      command = shell_out(
+          "[ -L #{node[:apache][:conf_dir]}/#{name} ] && echo \"exists\" || echo \"does not exist\"", returns: [0, 2])
 
       command.stdout=~/exists/ and command.stderr.empty?
     end
