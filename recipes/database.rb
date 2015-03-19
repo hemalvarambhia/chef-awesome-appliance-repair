@@ -4,7 +4,14 @@ package "mysql-server" do
   action :install
 end
 
-package "mysql-client" do
+mysql_client = case node[:platform]
+                 when "ubuntu"
+                   "mysql-client"
+                 when "centos"
+                   "mysql"
+               end
+
+package mysql_client do
   action :install
 end
 
