@@ -14,3 +14,8 @@ suites:
     run_list:
       - recipe[chef-awesome-appliance-repair::default]
     attributes:
+    excludes: centos-6.4
+  - name: redhat
+    run_list:
+      - recipe[chef-awesome-appliance-repair::default]
+    excludes: ubuntu-12.04
