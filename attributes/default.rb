@@ -1,30 +1,15 @@
 default[:aar_db_password] = "aar_db_password"
 default[:aar_secret_key] = "secret_key"
 
-default[:apache][:package] = case node[:platform]
-                               when "ubuntu"
-                                 "apache2"
-                               when "centos"
-                                 "httpd"
-                             end
-
-default[:apache][:service] = case node[:platform]
-                               when "ubuntu"
-                                 "apache2"
-                               when "centos"
-                                 "httpd"
-                             end
-
-default[:apache][:dir] = case node[:platform]
-                           when "ubuntu"
-                             "/etc/apache2"
-                           when "centos"
-                             "/etc/httpd"
-                         end
-
-default[:apache][:conf_dir] = case node[:platform]
-                                when "ubuntu"
-                                  "#{node[:apache][:dir]}/sites-enabled"
-                                when "centos"
-                                  "#{node[:apache][:dir]}/conf.d"
-                              end
+case node[:platform]
+  when "ubuntu"
+    default[:apache][:package] = "apache2"
+    default[:apache][:service] = "apache2"
+    default[:apache][:dir] = "/etc/apache2"
+    default[:apache][:conf_dir] = "#{node[:apache][:dir]}/sites-enabled"
+  when "centos"
+    default[:apache][:package] = "httpd"
+    default[:apache][:service] = "httpd"
+    default[:apache][:dir] = "/etc/httpd"
+    default[:apache][:conf_dir] = "#{node[:apache][:dir]}/conf.d"
+end
