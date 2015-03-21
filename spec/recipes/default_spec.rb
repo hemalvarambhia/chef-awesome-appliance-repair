@@ -19,11 +19,19 @@ describe "chef-awesome-appliance-repair::default" do
     it "installs unzip" do
       expect(chef_run).to install_package "unzip"
     end
+    context "on CentOS" do
+       let(:chef_run) { ChefSpec::SoloRunner.new(platform: "centos", version: "6.4").converge(described_recipe) }
 
-    it "installs the Python WSGI adapter module for Apache" do
-      expect(chef_run).to install_package "libapache2-mod-wsgi"
+      it "installs the Python WSGI adapter module for Apache" do
+        expect(chef_run).to install_package "mod_wsgi"
+      end
     end
 
+    context "on Ubuntu" do
+      it "installs the Python WSGI adapter module for Apache" do
+        expect(chef_run).to install_package "libapache2-mod-wsgi"
+      end
+    end
     it "install python pip" do
       expect(chef_run).to install_package "python-pip"
     end

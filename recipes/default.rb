@@ -6,8 +6,13 @@ include_recipe "apt::default"
 include_recipe "chef-awesome-appliance-repair::web_server"
 
 include_recipe "chef-awesome-appliance-repair::database"
-
-package "libapache2-mod-wsgi" do
+apache_wsgi_module = case node[:platform]
+                      when "ubuntu"
+                        "libapache2-mod-wsgi"
+                      when "centos"
+                        "mod_wsgi"
+                     end 
+package apache_wsgi_module do
  action :install
 end
 
