@@ -2,11 +2,11 @@ require 'serverspec'
 
 set :backend, :exec
 
-describe package("apache2") do
+describe package("httpd") do
  it { should be_installed }
 end
 
-describe service("apache2") do
+describe service("httpd") do
  it { should be_enabled }
  it { should be_running }
 end
@@ -54,7 +54,7 @@ describe "Application frameworks and tools" do
   end
 
   # Python WSGI adapter module for Apache
-  describe package("libapache2-mod-wsgi") do
+  describe package("mod_wsgi") do
    it { should be_installed }
   end
 
@@ -62,7 +62,7 @@ describe "Application frameworks and tools" do
    it { should be_installed }
   end
 
-  describe package("python-mysqldb") do
+  describe package("MySQL-python") do
    it { should be_installed }
   end
 
