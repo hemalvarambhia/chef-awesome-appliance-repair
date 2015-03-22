@@ -4,6 +4,15 @@ package node[:apache][:package] do
   action :install
 end
 
+group "www-data" do
+  action :create
+end
+
+user "www-data" do
+  gid "www-data"
+  action :create
+end
+
 service node[:apache][:service] do
   action [:enable, :start]
 end
