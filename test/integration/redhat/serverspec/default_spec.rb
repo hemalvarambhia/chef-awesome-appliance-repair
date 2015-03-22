@@ -11,6 +11,10 @@ describe service("httpd") do
  it { should be_running }
 end
 
+describe port(80) do
+ it { should be_listening }
+end
+
 describe file("/etc/httpd/conf.d/AAR-apache.conf") do
  it { should be_file }
 end

@@ -15,6 +15,10 @@ describe file("/etc/apache2/sites-enabled/AAR-apache.conf") do
  it { should be_file }
 end
 
+describe port(80) do
+ it { should be_listening }
+end
+
 describe "Database set up" do
   describe package("mysql-server") do
    it { should be_installed }
