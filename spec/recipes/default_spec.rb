@@ -19,29 +19,35 @@ describe "chef-awesome-appliance-repair::default" do
     it "installs unzip" do
       expect(chef_run).to install_package "unzip"
     end
-    context "on CentOS" do
-       let(:chef_run) { ChefSpec::SoloRunner.new(platform: "centos", version: "6.4").converge(described_recipe) }
 
-      it "installs the Python WSGI adapter module for Apache" do
-        expect(chef_run).to install_package "mod_wsgi"
-      end
+    it "installs python pip" do
+      expect(chef_run).to install_package "python-pip"
+    end
+
+    it "installs Flask" do
+      expect(chef_run).to install_python_pip "Flask"
     end
 
     context "on Ubuntu" do
       it "installs the Python WSGI adapter module for Apache" do
         expect(chef_run).to install_package "libapache2-mod-wsgi"
       end
-    end
-    it "install python pip" do
-      expect(chef_run).to install_package "python-pip"
+
+      it "installs the python MySQL client library" do
+        expect(chef_run).to install_package "python-mysqldb"
+      end
     end
 
-    it "installs the python MySQL client library" do
-      expect(chef_run).to install_package "python-mysqldb"
-    end
+    context "on CentOS" do
+       let(:chef_run) { ChefSpec::SoloRunner.new(platform: "centos", version: "6.4").converge(described_recipe) }
 
-    it "installs Flask" do
-      expect(chef_run).to install_python_pip "Flask"
+      it "installs the Python WSGI adapter module for Apache" do
+        expect(chef_run).to install_package "mod_wsgi"
+      end
+
+      it "installs the python MySQL client library" do
+        expect(chef_run).to install_package "MySQL-python"
+      end
     end
   end
 

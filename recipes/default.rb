@@ -2,6 +2,7 @@ Chef::Resource::Execute.send(:include, ChefAwesomeApplianceRepairHelper::General
 Chef::Resource::RemoteFile.send(:include, ChefAwesomeApplianceRepairHelper::GeneralCommands)
 
 include_recipe "apt::default"
+include_recipe "yum-epel::default"
 
 include_recipe "chef-awesome-appliance-repair::web_server"
 
@@ -19,8 +20,13 @@ end
 package "python-pip" do
  action :install
 end
-
-package "python-mysqldb" do
+python_mysql_lib = case node[:platform]
+                    when "ubuntu"
+                     "python-mysqldb"
+                    when "centos"
+                     "MySQL-python"
+                   end
+package python_mysql_lib do
  action :install
 end
 
