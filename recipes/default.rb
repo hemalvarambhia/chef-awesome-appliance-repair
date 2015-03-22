@@ -1,8 +1,12 @@
 Chef::Resource::Execute.send(:include, ChefAwesomeApplianceRepairHelper::GeneralCommands)
 Chef::Resource::RemoteFile.send(:include, ChefAwesomeApplianceRepairHelper::GeneralCommands)
 
-include_recipe "apt::default"
-include_recipe "yum-epel::default"
+case node[:platform]
+  when "ubuntu"
+    include_recipe "apt::default"
+  when "centos"
+    include_recipe "yum-epel::default"
+end
 
 include_recipe "chef-awesome-appliance-repair::web_server"
 
