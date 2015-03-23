@@ -16,7 +16,7 @@ describe "chef-awesome-appliance-repair::web_server" do
     it "creates the apache config file to serve the web app" do
       expect(chef_run).to create_cookbook_file "/etc/apache2/sites-enabled/AAR-apache.conf"
       apache_config_file = chef_run.cookbook_file "/etc/apache2/sites-enabled/AAR-apache.conf"
-      expect(apache_config_file).to notify("service[apache2]").to(:reload)
+      expect(apache_config_file).to notify("service[apache2]").to(:restart)
     end
 
     it "disables the default enabled site" do
@@ -39,7 +39,7 @@ describe "chef-awesome-appliance-repair::web_server" do
     it "creates the apache config file to serve the web app" do
       expect(chef_run).to create_cookbook_file "/etc/httpd/conf.d/AAR-apache.conf"
       apache_config_file = chef_run.cookbook_file "/etc/httpd/conf.d/AAR-apache.conf"
-      expect(apache_config_file).to notify("service[httpd]").to(:reload)
+      expect(apache_config_file).to notify("service[httpd]").to(:restart)
     end
 
     it "enables and starts apache" do

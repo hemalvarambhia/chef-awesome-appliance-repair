@@ -24,7 +24,7 @@ service node[:apache][:service] do
 end
 
 cookbook_file "#{node[:apache][:conf_dir]}/AAR-apache.conf" do
-  notifies :reload, "service[#{node[:apache][:service]}]"
+  notifies :restart, "service[#{node[:apache][:service]}]"
   action :create
 end
 
