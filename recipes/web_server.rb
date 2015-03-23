@@ -4,6 +4,12 @@ package node[:apache][:package] do
   action :install
 end
 
+if platform?("centos")
+  include_recipe "iptables::default"
+  iptables_rule "ssh"
+  iptables_rule "http"
+end
+
 group "www-data" do
   action :create
 end
