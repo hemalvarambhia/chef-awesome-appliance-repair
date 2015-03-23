@@ -16,7 +16,7 @@ apache_wsgi_module = case node[:platform]
                         "libapache2-mod-wsgi"
                       when "centos"
                         "mod_wsgi"
-                     end 
+                     end
 package apache_wsgi_module do
  action :install
 end
