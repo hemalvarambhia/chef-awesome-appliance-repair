@@ -15,6 +15,15 @@ include_recipe "chef-awesome-appliance-repair::database"
 package "python-pip" do
  action :install
 end
+
+python_pip "Flask" do
+ action :install
+end
+
+package "unzip" do
+ action :install
+end
+
 python_mysql_lib = case node[:platform]
                     when "ubuntu"
                      "python-mysqldb"
@@ -22,14 +31,6 @@ python_mysql_lib = case node[:platform]
                      "MySQL-python"
                    end
 package python_mysql_lib do
- action :install
-end
-
-python_pip "Flask" do
- action :install
-end
-
-package "unzip" do
  action :install
 end
 
