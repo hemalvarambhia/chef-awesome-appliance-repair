@@ -4,24 +4,11 @@ package "mysql-server" do
   action :install
 end
 
-mysql_daemon = case node[:platform]
-                 when "ubuntu"
-                   "mysql"
-                 when "centos"
-                   "mysqld"
-               end
-service mysql_daemon do
+service node[:mysql][:daemon] do
   action [:enable, :start]
 end
 
-mysql_client = case node[:platform]
-                 when "ubuntu"
-                   "mysql-client"
-                 when "centos"
-                   "mysql"
-               end
-
-package mysql_client do
+package node[:mysql][:client] do
   action :install
 end
 
