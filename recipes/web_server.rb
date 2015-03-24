@@ -4,6 +4,16 @@ package node[:apache][:package] do
   action :install
 end
 
+apache_wsgi_module = case node[:platform]
+                       when "ubuntu"
+                         "libapache2-mod-wsgi"
+                       when "centos"
+                         "mod_wsgi"
+                     end
+package apache_wsgi_module do
+  action :install
+end
+
 if platform?("centos")
   include_recipe "iptables::default"
   iptables_rule "ssh"

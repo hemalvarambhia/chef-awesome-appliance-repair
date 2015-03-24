@@ -8,6 +8,10 @@ describe "chef-awesome-appliance-repair::web_server" do
       expect(chef_run).to install_package "apache2"
     end
 
+    it "makes apache WSGI compliant" do
+      expect(chef_run).to install_package "libapache2-mod-wsgi"
+    end
+
     it "enables and starts apache2" do
       expect(chef_run).to enable_service "apache2"
       expect(chef_run).to start_service "apache2"
@@ -34,6 +38,10 @@ describe "chef-awesome-appliance-repair::web_server" do
 
     it "installs apache" do
       expect(chef_run).to install_package "httpd"
+    end
+
+    it "makes apache WSGI compliant" do
+      expect(chef_run).to install_package "mod_wsgi"
     end
 
     it "creates the apache config file to serve the web app" do

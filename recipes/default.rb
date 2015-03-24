@@ -11,15 +11,6 @@ end
 include_recipe "chef-awesome-appliance-repair::web_server"
 
 include_recipe "chef-awesome-appliance-repair::database"
-apache_wsgi_module = case node[:platform]
-                      when "ubuntu"
-                        "libapache2-mod-wsgi"
-                      when "centos"
-                        "mod_wsgi"
-                     end
-package apache_wsgi_module do
- action :install
-end
 
 package "python-pip" do
  action :install
