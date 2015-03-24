@@ -29,10 +29,6 @@ describe "chef-awesome-appliance-repair::default" do
     end
 
     context "on Ubuntu" do
-      it "installs the Python WSGI adapter module for Apache" do
-        expect(chef_run).to install_package "libapache2-mod-wsgi"
-      end
-
       it "installs the python MySQL client library" do
         expect(chef_run).to install_package "python-mysqldb"
       end
@@ -40,10 +36,6 @@ describe "chef-awesome-appliance-repair::default" do
 
     context "on CentOS" do
        let(:chef_run) { ChefSpec::SoloRunner.new(platform: "centos", version: "6.4").converge(described_recipe) }
-
-      it "installs the Python WSGI adapter module for Apache" do
-        expect(chef_run).to install_package "mod_wsgi"
-      end
 
       it "installs the python MySQL client library" do
         expect(chef_run).to install_package "MySQL-python"
