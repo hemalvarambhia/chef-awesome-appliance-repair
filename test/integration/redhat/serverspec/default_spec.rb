@@ -11,6 +11,15 @@ describe "Web server set up" do
     it { should be_installed }
   end
 
+  describe group("www-data") do
+    it { should exist }
+  end
+
+  describe user("www-data") do
+    it { should exist }
+    it { should belong_to_group "www-data" }
+  end
+
   describe service("httpd") do
     it { should be_enabled }
     it { should be_running }
