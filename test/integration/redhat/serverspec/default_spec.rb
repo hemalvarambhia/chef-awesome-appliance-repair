@@ -2,21 +2,33 @@ require 'serverspec'
 
 set :backend, :exec
 
-describe package("httpd") do
- it { should be_installed }
-end
+describe "Web server set up" do
+  describe package("httpd") do
+    it { should be_installed }
+  end
 
-describe service("httpd") do
- it { should be_enabled }
- it { should be_running }
-end
+  describe package "mod_wsgi" do
+    it { should be_installed }
+  end
 
-describe port(80) do
- it { should be_listening }
-end
+  describe service("httpd") do
+    it { should be_enabled }
+    it { should be_running }
+  end
 
-describe file("/etc/httpd/conf.d/AAR-apache.conf") do
- it { should be_file }
+  describe port(80) do
+   it { should be_listening }
+  end
+
+  describe file("/etc/httpd/conf.d/AAR-apache.conf") do
+    it { should be_file }
+  end
+
+  describe file("/var/www/") do
+    it { should be_directory }
+    it { should be_owned_by "www-data" }
+    it { should be_grouped_into "www-data" }
+  end
 end
 
 describe "Database set up" do
@@ -57,30 +69,19 @@ describe "Application frameworks and tools" do
    it { should be_installed }
   end
 
-  # Python WSGI adapter module for Apache
-  describe package("mod_wsgi") do
-   it { should be_installed }
-  end
-
   describe package("python-pip") do
-   it { should be_installed }
+    it { should be_installed }
   end
 
   describe package("MySQL-python") do
-   it { should be_installed }
+    it { should be_installed }
   end
 
   describe command("pip freeze | grep Flask") do
-   its(:stdout) do
-    should match /Flask/
-   end
+    its(:stdout) do
+      should match /Flask/
+    end
   end
-end
-
-describe file("/var/www/") do
- it { should be_directory }
- it { should be_owned_by "www-data" }
- it { should be_grouped_into "www-data" }
 end
 
 describe file("/var/www/AAR") do
