@@ -8,14 +8,28 @@ provisioner:
 platforms:
   - name: ubuntu-12.04
   - name: centos-6.4
+    driver:
+      name: vagrant
+  - name: digitalocean-ubuntu-14.04
+    driver:
+      name: digitalocean
+      access_token: <%= ENV['DIGITALOCEAN_ACCESS_TOKEN'] %>
+      ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEY_IDS'] %>
+      image: ubuntu-14-04-x32
+  - name: digitalocean-centos-6.5
+    driver:
+      name: digitalocean
+      image: centos-6-5-x64
+      access_token: <%= ENV['DIGITALOCEAN_ACCESS_TOKEN'] %>
+      ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEY_IDS'] %>
 
 suites:
   - name: default
     run_list:
       - recipe[chef-awesome-appliance-repair::default]
     attributes:
-    excludes: centos-6.4
+    excludes: centos-6.4, digitalocean-centos-6.5
   - name: redhat
     run_list:
       - recipe[chef-awesome-appliance-repair::default]
-    excludes: ubuntu-12.04
+    excludes: ubuntu-12.04, digitalocean-ubuntu-14.04
